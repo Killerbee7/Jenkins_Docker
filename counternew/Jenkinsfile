@@ -2,38 +2,46 @@ pipeline {
 
   agent any
 
-  environment {
+ /*  environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-  }
+  } */
 
   stages {
+
+    stage('Initialise'){
+        steps{
+            sh 'echo initialization started......'
+        }
+    }
 
     stage('Build') {
 
       steps {
-        sh 'docker build -t kalwar/ratinmaze:latest .'
+        sh 'echo build stage'
       }
     }
 
-    stage('Login') {
-
-      steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-      }
-    }
+     stage('Test'){
+        steps {
+            sh 'echo testing...'
+        }
+     }
 
     stage('Push') {
 
       steps {
-        sh 'docker push kalwar/ratinmaze:latest'
+        sh 'echo push stage'
       }
     }
+    stage('status'){
+        steps{
+            sh 'Hurray !!! Nothing runnned successfully ......'
+        }
+    }
+   
   }
 
-  post {
-    always {
-      sh 'docker logout'
-    }
-  }
+
+
 
 }
